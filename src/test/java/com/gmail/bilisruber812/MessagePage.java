@@ -1,29 +1,37 @@
 package com.gmail.bilisruber812;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import java.util.List;
 
-public class MessagePage {
-    /**
-     * конструктор класса
-     */
-    public WebDriver driver;
-    public MessagePage(WebDriver driver) {
+class MessagePage {
+    private WebDriver driver;
+    String theme = "Simbirsoft Тестовое задание";
+
+    MessagePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
-    /**
-     * определение локатора кнопки "Написать"
-     */
-    @FindBy(xpath =  "//*[contains(@class, 'svgicon svgicon-mail--ComposeButton')]")
+
+    @FindBy(xpath = "//*[contains(@class, 'svgicon-mail--ComposeButton')]")
     private WebElement composeBtn;
-    /**
-     * метод для нажатия кнопки "Написать"
-     */
-    public void entryCompose() {
+
+    void entryCompose() {
         composeBtn.click();
     }
 
+    int getCountLetters() {
+        int count = 0;
+        List<WebElement> email = driver.findElements(By.xpath(" //*[contains(@class, 'mail-MessageSnippet-Item_subjectWrapper')]"));
+        for (
+                WebElement emailsub : email) {
+            if (emailsub.getText().equals(theme)) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

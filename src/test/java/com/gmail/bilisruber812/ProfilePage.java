@@ -8,66 +8,47 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ProfilePage {
-    /**
-     * конструктор класса
-     */
-    public WebDriver driver;
-    public ProfilePage(WebDriver driver) {
+class ProfilePage {
+    private WebDriver driver;
+
+    ProfilePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.driver = driver; }
-    /**
-     * определение локатора меню пользователя
-     */
+        this.driver = driver;
+    }
+
     @FindBy(xpath = "//*[contains(@class, 'user-account__name')]")
     private WebElement userMenu;
-    /**
-     * определение локатора кнопки сообщения
-     */
-    @FindBy(xpath =  "//*[contains(@class, 'legouser__menu-item legouser__menu-item_action_mail')]")
+    @FindBy(xpath = "//*[contains(@class, 'legouser__menu-item_action_mail')]")
     private WebElement messageBtn;
-    /**
-     * определение локатора кнопки выхода из аккаунта
-     */
-    @FindBy(xpath = "//*[contains(@class, 'legouser__menu-item legouser__menu-item_action_exit')]")
+    @FindBy(xpath = "//*[contains(@class, 'legouser__menu-item_action_exit')]")
     private WebElement logoutBtn;
-    /**
-     * метод для получения логина из меню пользователя
-     */
-    public String getLogin() {
+
+    String getLogin() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'user-account__name')]")));
         String login = userMenu.getText();
-        return login; }
-    /**
-     * определение локатора имени
-     */
+        return login;
+    }
+
     @FindBy(xpath = "//*[contains(@class, 'personal-info__last')]")
     private WebElement userLast;
-    /**
-     * метод для получения имени пользователя
-     */
-    public String getUserName() {
+
+    String getUserName() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'personal-info__last')]")));
         String userName = userLast.getText();
-        return userName; }
-    /**
-     * метод для нажатия кнопки меню пользователя
-     */
-    public void entryMenu() {
+        return userName;
+    }
+
+    void entryMenu() {
         userMenu.click();
     }
-    /**
-     * метод для нажатия кнопки выхода из аккаунта
-     */
-    public void userLogout() {
+
+    void userLogout() {
         logoutBtn.click();
     }
-    /**
-     * метод для нажатия кнопки входа в сообщения
-     */
-    public void entryMessage() {
+
+    void entryMessage() {
         messageBtn.click();
     }
 }
