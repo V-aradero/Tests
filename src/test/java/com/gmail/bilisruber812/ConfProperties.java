@@ -1,13 +1,10 @@
 package com.gmail.bilisruber812;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-
-class ConfProperties {
+public class ConfProperties {
     private static FileInputStream fileInputStream;
     private static Properties PROPERTIES;
-
     static {
         try {
             fileInputStream = new FileInputStream("src/test/resources/conf.properties");
@@ -24,8 +21,7 @@ class ConfProperties {
                 }
         }
     }
-
-    static String getProperty(String key) {
+    public static String getProperty(String key) {
         return PROPERTIES.getProperty(key);
     }
 }

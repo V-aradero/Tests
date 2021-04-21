@@ -1,5 +1,4 @@
 package com.gmail.bilisruber812;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -8,11 +7,9 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
-
 public class MessageTest {
     private static LoginPage loginPage;
     private static ProfilePage profilePage;
@@ -20,7 +17,6 @@ public class MessageTest {
     private static NewLetterPage newLetterPage;
     private static WebDriver driver;
     private static String nodeURL;
-
     @BeforeClass()
     public static void setUp() throws MalformedURLException {
         nodeURL = "http://localhost:4546/wd/hub";
@@ -35,9 +31,8 @@ public class MessageTest {
         newLetterPage = new NewLetterPage(driver);
         driver.get(ConfProperties.getProperty("loginpage"));
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
-
     @Test
     public void messageTest() {
         loginPage.inputLogin(ConfProperties.getProperty("login"));
@@ -49,20 +44,15 @@ public class MessageTest {
         Assert.assertEquals(ConfProperties.getProperty("login"), login);
         profilePage.entryMenu();
         profilePage.entryMessage();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         messagePage.entryCompose();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         newLetterPage.inputAddress(ConfProperties.getProperty("mail"));
-        newLetterPage.inputTopic(messagePage.theme + "." + "<" + lastName + ">");
+        newLetterPage.inputTopic(messagePage.getTheme() + "." + "<" + lastName + ">");
         newLetterPage.inputBody(String.valueOf(messagePage.getCountLetters()));
         newLetterPage.sendLetter();
     }
-
     @AfterClass
     public static void tearDown() {
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         profilePage.entryMenu();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         profilePage.userLogout();
         driver.quit();
     }
